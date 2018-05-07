@@ -8,9 +8,9 @@
 
 namespace App\Controller;
 
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Users;
 
 class MainController extends AbstractController
 {
@@ -22,11 +22,8 @@ class MainController extends AbstractController
         return $this->render('home.html.twig');
     }
 
-    /**
-     * @Route("/register")
-     */
-    public function register()
+    public function save()
     {
-        return $this->render('register.html.twig');
+
     }
 }

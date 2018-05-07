@@ -1,7 +1,7 @@
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Antiqua\UserBundle\Entity\User
+    user_class: App\Entity\User
     from_email:
         address: nicolas.tran@supinternet.fr
         sender_name: You
