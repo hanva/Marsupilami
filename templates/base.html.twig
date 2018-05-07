@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
+    <style> body {
+            background: coral;
+        }</style>
 </head>
 <body>
 {% if is_granted('ROLE_USER') %}
