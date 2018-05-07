@@ -5,6 +5,10 @@ fos_user:
     from_email:
         address: nicolas.tran@supinternet.fr
         sender_name: You
+    registration:
+        form:
+            type: App\Forms\RegistrationType
+            validation_groups: [AppRegistration]
 framework:
     # ...
     templating:
