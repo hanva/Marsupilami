@@ -9,6 +9,10 @@ fos_user:
         form:
             type: App\Forms\RegistrationType
             validation_groups: [AppRegistration]
+    profile:
+        form:
+            type: App\Forms\ProfileType
+            validation_groups: [AppProfile]
 framework:
     # ...
     templating:

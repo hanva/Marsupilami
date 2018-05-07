@@ -11,13 +11,14 @@ namespace App\Forms;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RegistrationType extends AbstractType
+class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
             ->remove('email')
+            ->remove('plainPassword')
             ->remove('username');
         $builder
             ->add('name')

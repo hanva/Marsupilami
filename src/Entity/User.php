@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
@@ -17,6 +16,10 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      */
     protected $id;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="integer")
@@ -83,9 +86,15 @@ class User extends BaseUser
         $this->food = $food;
     }
 
-    public function setUsername($username)
+    public function setName($name)
     {
-        parent::setEmail($username);
-        parent::setUsername($username);
+        parent::setEmail($name);
+        parent::setUsername($name);
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }
