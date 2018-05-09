@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
@@ -96,5 +100,55 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @ManyToMany(targetEntity="User")
+     * @JoinTable(name="friends",
+     *     joinColumns={@JoinColumn(name="user_a_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="user_b_id", referencedColumnName="id")}
+     * )
+     * @var ArrayCollection
+     */
+    private $friends;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->friends = new ArrayCollection();
+    }
+
+    /**
+     * @return array
+     */
+    public function getFriends()
+    {
+        return $this->friends->toArray();
+    }
+
+    /**
+     * @param  User $user
+     * @return void
+     */
+    public function addFriend(User $user)
+    {
+        if (!$this->friends->contains($user)) {
+            $this->friends->add($user);
+            $user->addFriend($this);
+        }
+    }
+
+    /**
+     * @param  User $user
+     * @return void
+     */
+    public function removeFriend(User $user)
+    {
+        if ($this->friends->contains($user)) {
+            $this->friends->removeElement($user);
+            $user->removeFriend($this);
+        }
     }
 }

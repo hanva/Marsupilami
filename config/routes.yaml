@@ -1,9 +1,13 @@
 #index:
 #    path: /
 #    controller: App\Controller\MainController::homepage
-#register:
-#    path: /register
-#   controller: App\Controller\MainController::register
+#addFriends:
+#    path: /friends
+#    controller: App\Controller\MainController::friends
+#    path: /addFriends
+#    controller: App\Controller\MainController::addFriends
+#    path: /removeFriends
+#    controller: App\Controller\MainController::removeFriends
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
