@@ -13,6 +13,7 @@ use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use PDO;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
@@ -30,7 +31,8 @@ class MainController extends AbstractController
     public function friends()
     {
         $user = $this->getUser();
-        $myFriends = $user->getFriends();
+        $myFriends = $user->getMyFriends();
+        var_dump($myFriends);
         $em = $this->getDoctrine()->getManager();
         $RAW_QUERY = 'SELECT * FROM user ';
 
@@ -41,33 +43,29 @@ class MainController extends AbstractController
             'users' => $result,
             'friends' => $myFriends,
         ];
-
         return $this->render('friends.html.twig', $data);
-
     }
 
     /**
-     * @Route("/addFriends")
+     * @Route("/addFriends" ,methods={"POST"})
      */
-    public function addFriends()
+    public function addFriends(Request $request)
     {
-        if (isset($_POST['add'])) {
-            $id = $_POST['id'];
+        if (isset($request) && is_string($id = $request->get('id'))) {
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->find($id);
-            $friend->addFriend($user);
-
+            $user->addFriend($friend);
         }
         return $this->redirectToRoute('friends');
     }
 
     /**
-     * @Route("/removeFriends")
+     * @Route("/removeFriends" ,methods={"POST"}))
      */
-    public function removeFriends()
+    public
+    function removeFriends(Request $request)
     {
-        if (isset($_POST['add'])) {
-            $id = $_POST['id'];
+        if (isset($request) && is_string($id = $request->get('id'))) {
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->find($id);
             $user->removeFriend($friend);

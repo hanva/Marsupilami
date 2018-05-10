@@ -103,39 +103,51 @@ class User extends BaseUser
     }
 
     /**
-     * @ManyToMany(targetEntity="User")
-     * @JoinTable(name="friends",
-     *     joinColumns={@JoinColumn(name="user_a_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@JoinColumn(name="user_b_id", referencedColumnName="id")}
-     * )
-     * @var ArrayCollection
+     * Many Users have Many Users.
+     * @ManyToMany(targetEntity="User", mappedBy="myFriends")
      */
-    private $friends;
+    private $friendsWithMe;
 
     /**
-     * Constructor.
+     * Many Users have many Users.
+     * @ManyToMany(targetEntity="User", inversedBy="friendsWithMe")
+     * @JoinTable(name="friends",
+     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="friend_user_id", referencedColumnName="id")}
+     *      )
      */
+    private $myFriends;
+
     public function __construct()
     {
-        $this->friends = new ArrayCollection();
+        $this->friendsWithMe = new ArrayCollection();
+
+        $this->myFriends = new ArrayCollection();
+    }
+
+    public function getFriendsWithMe()
+    {
+        return $this->friendsWithMe;
     }
 
     /**
+     * Get myFriends
+     *
      * @return array
      */
-    public function getFriends()
+    public function getMyFriends()
     {
-        return $this->friends->toArray();
+        return $this->myFriends->toArray();
     }
 
     /**
-     * @param  User $user
+     * @param   $user
      * @return void
      */
     public function addFriend(User $user)
     {
-        if (!$this->friends->contains($user)) {
-            $this->friends->add($user);
+        if (!$this->myFriends->contains($user)) {
+            $this->myFriends->add($user);
             $user->addFriend($this);
         }
     }
@@ -146,9 +158,11 @@ class User extends BaseUser
      */
     public function removeFriend(User $user)
     {
-        if ($this->friends->contains($user)) {
-            $this->friends->removeElement($user);
+        if ($this->myFriends->contains($user)) {
+            $this->myFriends->removeElement($user);
             $user->removeFriend($this);
         }
     }
+
+
 }

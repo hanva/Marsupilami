@@ -13,7 +13,7 @@
         {% endfor %}
     {% endif %}
     {% for user in users %}
-        <form method="POST" action="addFriends">
+        <form method="POST" name="form" action="addFriends">
             <div>
                 <p>
                     {{ user.name }}
