@@ -32,7 +32,6 @@ class MainController extends AbstractController
     {
         $user = $this->getUser();
         $myFriends = $user->getMyFriends();
-        var_dump($myFriends);
         $em = $this->getDoctrine()->getManager();
         $RAW_QUERY = 'SELECT * FROM user ';
 
@@ -55,6 +54,9 @@ class MainController extends AbstractController
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->find($id);
             $user->addFriend($friend);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
         }
         return $this->redirectToRoute('friends');
     }
@@ -69,6 +71,9 @@ class MainController extends AbstractController
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->find($id);
             $user->removeFriend($friend);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
         }
         return $this->redirectToRoute('friends');
     }
