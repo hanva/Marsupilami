@@ -14,6 +14,5 @@ fos_user:
             type: App\Forms\ProfileType
             validation_groups: [AppProfile]
 framework:
-    # ...
     templating:
         engines: ['twig', 'php']

@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use PDO;
 use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
