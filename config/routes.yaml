@@ -8,6 +8,8 @@
 #    controller: App\Controller\MainController::addFriends
 #    path: /removeFriends
 #    controller: App\Controller\MainController::removeFriends
+#    path: /getUsers
+#    controller: App\Controller\MainController::getUsers
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

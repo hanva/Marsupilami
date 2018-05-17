@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Marsupilami" ng-init="myText='Hello World!'">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>
+        {% block title %}Welcome!{% endblock %}
+    </title>
     {% block stylesheets %}{% endblock %}
-    <link rel="stylesheet" href="{{ asset('build/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 </head>
+
 <body>
 {% if is_granted('ROLE_USER') %}
     Welcome To Safari
@@ -16,10 +20,13 @@
     <a href="/register">Register</a>
     <a href="{{ path('fos_user_security_login') }}">Login</a>
 {% endif %}
+<ng-view></ng-view>
 {% block body %}{% endblock %}
-{% block javascripts %}
-{% endblock %}
-<script src="../node_modules/angular/angular.min.js"></script>
+{% block javascripts %}{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
 <script src="{{ asset('build/app.js') }}"></script>
+<script src="{{ asset('build/controllers.js') }}"></script>
 </body>
 </html>

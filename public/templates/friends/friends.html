@@ -1,0 +1,18 @@
+Hello friends
+<h1>Your friends !</h1>
+<p>Pas encore d'amis :(</p>
+<form method="POST" action="removeFriends">
+    <!--<div>-->
+    <!--<p> {{ friend }}</p>-->
+    <!--<input type="hidden" name="id" value="{{ friend.id }}">-->
+    <!--<button name="add" id="{{ friend.id }}">Supprimer cet ami</button>-->
+    <!--</div>-->
+</form>
+<form method="POST" name="form" action="addFriends">
+    <input type="text" name="name" id="nameInput" placeholder="name" list="nameList"/>
+    <button name="add">Ajouter en ami</button>
+    <br>
+    <datalist id="nameList">
+    </datalist>
+</form>
+<script src="{{ asset('build/friends.js') }}"></script>

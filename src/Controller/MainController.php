@@ -13,15 +13,30 @@ use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/" )
      */
     public function homepage()
     {
         return $this->render('home.html.twig');
+    }
+
+    /**
+     * @Route("/getUsers")
+     */
+    public function getUsers()
+    {
+        $RAW_QUERY = 'SELECT * FROM user ';
+        $em = $this->getDoctrine()->getManager();
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        $response = new Response(json_encode($result));
+        return $response;
     }
 
     /**
@@ -42,6 +57,8 @@ class MainController extends AbstractController
             'friends' => $myFriends,
         ];
         return $this->render('friends.html.twig', $data);
+        $response = new Response(json_encode($data));
+        // return $response;
     }
 
     /**
@@ -49,15 +66,19 @@ class MainController extends AbstractController
      */
     public function addFriends(Request $request)
     {
-        if (isset($request) && is_string($id = $request->get('id'))) {
+        if (isset($request) && is_string($username = $request->get('name'))) {
             $user = $this->getUser();
-            $friend = $this->getDoctrine()->getRepository(User::class)->find($id);
-            $user->addFriend($friend);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $friend = $this->getDoctrine()->getRepository(User::class)->findByName($username);
+            if (empty($friend))
+                return $this->redirectToRoute('product');
+            else {
+                $user->addFriend($friend[0]);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+            }
+            return $this->redirectToRoute('friends');
         }
-        return $this->redirectToRoute('friends');
     }
 
     /**

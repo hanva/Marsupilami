@@ -9,24 +9,23 @@
         <p>Pas encore d'amis :(</p>
     {% else %}
         {% for friend in friends %}
-            <p> {{ friend }}</p>
+            <form method="POST" action="removeFriends">
+                <div>
+                    <p> {{ friend }}</p>
+                    <input type="hidden" name="id" value="{{ friend.id }}">
+                    <button name="add" id="{{ friend.id }}">Supprimer cet ami</button>
+                </div>
+            </form>
         {% endfor %}
     {% endif %}
-    {% for user in users %}
-        <form method="POST" name="form" action="addFriends">
-            <div>
-                <p>
-                    {{ user.name }}
-                </p>
-                <input type="hidden" name="id" value="{{ user.id }}">
-                <button name="add" id="{{ user.id }}">Ajouter en ami</button>
-            </div>
-        </form>
-        <form method="POST" action="removeFriends">
-            <div>
-                <input type="hidden" name="id" value="{{ user.id }}">
-                <button name="add" id="{{ user.id }}">Supprimer cet ami</button>
-            </div>
-        </form>
-    {% endfor %}
+    <form method="POST" name="form" action="addFriends">
+        <input type="text" name="name" id="nameInput" placeholder="name" list="nameList"/>
+        <button name="add">Ajouter en ami</button>
+        <br>
+        <datalist id="nameList">
+        </datalist>
+    </form>
 {% endblock %}
+ {% block javascripts %}
+     <script src="{{ asset('build/friends.js') }}"></script>
+ {% endblock %}

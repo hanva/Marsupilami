@@ -1,0 +1,43 @@
+<form name="fos_user_registration_form" method="post" action="/register/" class="fos_user_registration_register">
+    <div>
+        <label for="fos_user_registration_form_name" class="required">Name</label>
+        <input type="text" id="fos_user_registration_form_name" name="fos_user_registration_form[name]"
+               required="required"/>
+    </div>
+    <div>
+        <label for="fos_user_registration_form_age" class="required">Age</label>
+        <input type="number" id="fos_user_registration_form_age" name="fos_user_registration_form[age]"
+               required="required"/>
+    </div>
+    <div>
+        <label for="fos_user_registration_form_family" class="required">Family</label>
+        <input type="text" id="fos_user_registration_form_family" name="fos_user_registration_form[family]"
+               required="required"/>
+    </div>
+    <div>
+        <label for="fos_user_registration_form_race" class="required">Race</label>
+        <input type="text" id="fos_user_registration_form_race" name="fos_user_registration_form[race]"
+               required="required"/>
+    </div>
+    <div>
+        <label for="fos_user_registration_form_food" class="required">Food</label>
+        <input type="text" id="fos_user_registration_form_food" name="fos_user_registration_form[food]"
+               required="required"/>
+    </div>
+    <div>
+        <label for="fos_user_registration_form_plainPassword_first" class="required">Password</label>
+        <input type="password" id="fos_user_registration_form_plainPassword_first"
+               name="fos_user_registration_form[plainPassword][first]" required="required" autocomplete="new-password"/>
+    </div>
+    <div>
+        <label for="fos_user_registration_form_plainPassword_second" class="required">Repeat password</label>
+        <input type="password" id="fos_user_registration_form_plainPassword_second"
+               name="fos_user_registration_form[plainPassword][second]" required="required"
+               autocomplete="new-password"/>
+    </div>
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+    <input type="hidden" id="fos_user_registration_form__token" name="fos_user_registration_form[_token]"
+           value="4bDKofNViNSN5j8p-BZ9kpvDSihtF-7F7xg9nBTgCfM"/>
+</form>
