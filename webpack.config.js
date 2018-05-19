@@ -10,8 +10,8 @@ Encore
 
     // will create public/build/app.js and public/build/app.css
     .addEntry('app', './assets/scripts/app.js')
-    .addEntry('controllers', './assets/scripts/Controllers/mainController.js')
-    .addEntry('friends', './assets/scripts/friends.js')
+    .addEntry('controllers/profileController', './assets/scripts/Controllers/profileController.js')
+    .addEntry('controllers/friendsController', './assets/scripts/Controllers/friendsController.js')
 
 
     // allow legacy applications to use $/jQuery as a global variable

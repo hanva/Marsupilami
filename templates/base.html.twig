@@ -14,8 +14,9 @@
 {% if is_granted('ROLE_USER') %}
     Welcome To Safari
     <a href="{{ path('fos_user_security_logout') }}">Logout</a>
-    <a href="{{ path('fos_user_profile_edit') }}">Edit profile</a>
-    <a href="/friends">Add Friends</a>
+    <a href="/#!/profile/"> Profile</a>
+    <a href="/#!/profile/edit/">Edit Profile</a>
+    <a href="/#!/friends/">Add Friends</a>
 {% else %}
     <a href="/register">Register</a>
     <a href="{{ path('fos_user_security_login') }}">Login</a>
@@ -25,8 +26,8 @@
 {% block javascripts %}{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-
 <script src="{{ asset('build/app.js') }}"></script>
-<script src="{{ asset('build/controllers.js') }}"></script>
+<script src="{{ asset('build/controllers/profileController.js') }}"></script>
+<script src="{{ asset('build/controllers/friendsController.js') }}"></script>
 </body>
 </html>
