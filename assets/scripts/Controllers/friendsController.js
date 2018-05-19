@@ -2,14 +2,15 @@ angular.module('Marsupilami').controller('friendsController', ['$scope', '$http'
     $http.get('/friends').then(function (response) {
         $scope.user = response.data.users;
         $scope.friends = response.data.friends;
-        console.log($scope.friends);
         prepareDatalist(response.data.users);
     });
     $scope.addFriend = function () {
         addFriend($scope.username, $http, $scope)
     }
+    $scope.removeFriend = function (form) {
+        removeFriend(form.friend.name, $http, $scope)
+    }
 }]);
-
 
 function addFriend(username, $http, $scope) {
     var data = {
@@ -26,8 +27,26 @@ function addFriend(username, $http, $scope) {
         .then(function (response) {
             var friends = response.data;
             $scope.friends = friends;
-            $scope.test = "salut";
-            return friends;
+        }, function (error) {
+            console.log(error.data);
+        });
+}
+
+function removeFriend(username, $http, $scope) {
+    var data = {
+        'username': username
+    };
+    $http({
+        method: 'POST',
+        url: "/removeFriends",
+        data: JSON.stringify(data),
+        headers: {
+            'Content-Type': "application/json"
+        },
+    })
+        .then(function (response) {
+            var friends = response.data;
+            $scope.friends = friends;
         }, function (error) {
             console.log(error.data);
         });

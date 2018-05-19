@@ -8,15 +8,12 @@
 
 namespace App\Controller;
 
-
+use App\Utils\FriendsManager;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class MainController extends AbstractController
 {
@@ -48,32 +45,17 @@ class MainController extends AbstractController
     public function friends()
     {
         $user = $this->getUser();
-        $myFriends = $user->getMyFriends();
         $em = $this->getDoctrine()->getManager();
         $RAW_QUERY = 'SELECT * FROM user ';
 
         $statement = $em->getConnection()->prepare($RAW_QUERY);
         $statement->execute();
         $result = $statement->fetchAll();
-        $friendsArray = [];
-        $count = 0;
-        while ($count < sizeof($myFriends)) {
-            $name = $myFriends[$count]->getName();
-            $id = $myFriends[$count]->getId();
-            $friend = [
-                'name' => $name,
-                '$id' => $id
-            ];
-            array_push($friendsArray, $friend);
-            $count++;
-        }
-        $data = [
-            'users' => $result,
-            'friends' => $friendsArray,
-        ];
+        $friendManger = new FriendsManager();
+        $data["friends"] = $friendManger->getFriends($user);
+        $data["users"] = $result;
         $response = new Response(json_encode($data));
         return $response;
-        //        return $this->render('friends.html.twig', $data);
     }
 
     /**
@@ -95,20 +77,8 @@ class MainController extends AbstractController
                 $em->persist($user);
                 $em->flush();
             }
-            $user = $this->getUser();
-            $myFriends = $user->getMyFriends();
-            $data = [];
-            $count = 0;
-            while ($count < sizeof($myFriends)) {
-                $name = $myFriends[$count]->getName();
-                $id = $myFriends[$count]->getId();
-                $friend = [
-                    'name' => $name,
-                    '$id' => $id
-                ];
-                array_push($data, $friend);
-                $count++;
-            }
+            $friendManger = new FriendsManager();
+            $data = $friendManger->getFriends($user);
             $response = new Response(json_encode($data));
             return $response;
         }
@@ -120,15 +90,22 @@ class MainController extends AbstractController
     public
     function removeFriends(Request $request)
     {
-        if (isset($request) && is_string($id = $request->get('id'))) {
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $username = $request->username;
+        if (isset($request) && is_string($username)) {
             $user = $this->getUser();
-            $friend = $this->getDoctrine()->getRepository(User::class)->find($id);
-            $user->removeFriend($friend);
+            $friend = $this->getDoctrine()->getRepository(User::class)->findByName($username);
+            $user->removeFriend($friend[0]);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
         }
-        return $this->redirectToRoute('friends');
+        $user = $this->getUser();
+        $friendManger = new FriendsManager();
+        $data = $friendManger->getFriends($user);
+        $response = new Response(json_encode($data));
+        return $response;
     }
 
 }

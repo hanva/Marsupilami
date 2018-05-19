@@ -1,19 +1,19 @@
 <h1>Your friends !</h1>
 
-<div ng-model="friends">
-    <div ng-if="friends.length > 0" ng-repeat="friend in friends">
-        <form name="remove" ng-submit="removeFriend(friendform)" name="form">
-            <div>
-                <p> {{ friend .name}}</p>
-                <input type="hidden" name="id" value="{{ friend.id }}">
-                <button name="add" id="{{ friend.id }}">Supprimer cet ami</button>
-            </div>
+<div ng-if="friends.length > 0">
+
+    <div ng-repeat="friend in friends">
+        <form ng-submit=" removeFriend(this)">
+            <p> {{ friend .name}}</p>
+            <input ng-model="userid" ng-value="friend .name" type="hidden">
+            <button>Supprimer cet ami</button>
         </form>
     </div>
-    <p ng-if="friends.length === 0">Pas encore d'amis :(</p>
 </div>
 
-<form name="friendform" ng-submit="addFriend(friendform)" name="form">
+<p ng-if=" friends.length=== 0">Pas encore d'amis :(</p>
+
+<form name="friendform" ng-submit="addFriend(friendform)">
     <input ng-model="username" type="text" name="name" id="nameInput" placeholder="name" list="nameList"/>
     <button name="add">Ajouter en ami</button>
     <br>
