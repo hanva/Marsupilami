@@ -1,15 +1,15 @@
 <h1>Your friends !</h1>
 
-<div ng-if="friends.length > 0">
-
-    <div ng-repeat="friend in friends">
-        <form ng-submit=" removeFriend(this)">
-            <p> {{ friend .name}}</p>
+<div class="container-fluid table" ng-if=" friends.length> 0" ng-repeat="friend in friends">
+    <div class="row">
+        <form class="col" ng-submit=" removeFriend(this)">
+            <small> {{ friend .name}}</small>
             <input ng-model="userid" ng-value="friend .name" type="hidden">
             <button>Supprimer cet ami</button>
         </form>
     </div>
 </div>
+
 
 <p ng-if=" friends.length=== 0">Pas encore d'amis :(</p>
 
@@ -20,3 +20,51 @@
     <datalist id="nameList">
     </datalist>
 </form>
+
+<div class="container" ng-if="new == true">
+    <h3>Ce Marsu n'existe pas , enregistez le !</h3>
+    <form name="registerForm" ng-submit="registerFriend(this)">
+        <div class="form-group">
+            Name: <input class="form-control" name="nameInput" ng-minlength="4" type="text" ng-model="name">
+            <div class="text-danger" ng-if="registerForm.nameInput.$invalid">Nom trop court ! Minimum 4 lettres</div>
+            <br>
+        </div>
+        <div class="form-group">
+            Age: <input class="form-control" name="ageInput" type="number" ng-required="1" ng-model="age"><br>
+            <small class="form-text text-danger" ng-if="registerForm.ageInput.$invalid">Selectionnez un âge</small>
+        </div>
+        <div class="form-group">
+            Familly: <input class="form-control" name="famillyInput" ng-required="1" type="text" ng-model="familly"><br>
+            <small class="form-text text-danger" ng-if="registerForm.famillyInput.$invalid">Choisissez une famille
+            </small>
+        </div>
+        <div class="form-group">
+            Race: <input class="form-control" name="raceInput" type="text" ng-required="1" ng-model="race"><br>
+            <small class="form-text text-danger" ng-if="registerForm.raceInput.$invalid">Entrez une race
+            </small>
+        </div>
+        <div class="form-group">
+            Food:<input class="form-control" name="foodInput" type="text" ng-required="1" ng-model="food"><br>
+            <small class="form-text text-danger" ng-if="registerForm.foodInput.$invalid">Entrez une nourriture
+            </small>
+        </div>
+        <div class="form-group">
+            Password:<input class="form-control" name="passwordInput" ng-minlength="6" ng-model="password"
+                            type="password"><br>
+            <small class="form-text text-danger" ng-if="registerForm.passwordInput.$invalid">6 lettres sont requises
+                pour le mot de passe
+            </small>
+        </div>
+        <div class="form-group">
+            Repeat password:<input class="form-control text-danger" name="passwordRepeatInput"
+                                   ng-model="passwordReapeat"
+                                   type="password"><br>
+            <small class="form-text text-danger " ng-if="passwordReapeat!=password">Les mots de passe ne correspondent
+                pas
+            </small>
+        </div>
+        <button type="submit" id="create-user-button" ng-disabled="passwordReapeat!=password">
+            Enregistrez votre ami
+        </button>
+    </form>
+</div>

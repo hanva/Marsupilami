@@ -10,6 +10,10 @@ angular.module('Marsupilami').controller('friendsController', ['$scope', '$http'
     $scope.removeFriend = function (form) {
         removeFriend(form.friend.name, $http, $scope)
     }
+    $scope.registerFriend = function (form) {
+        registerFriend(form, $http, $scope)
+    }
+
 }]);
 
 function addFriend(username, $http, $scope) {
@@ -26,7 +30,13 @@ function addFriend(username, $http, $scope) {
     })
         .then(function (response) {
             var friends = response.data;
-            $scope.friends = friends;
+            if (friends === "404") {
+                $scope.new = true;
+                $scope.name = username;
+            }
+            else {
+                $scope.friends = friends;
+            }
         }, function (error) {
             console.log(error.data);
         });
@@ -47,6 +57,36 @@ function removeFriend(username, $http, $scope) {
         .then(function (response) {
             var friends = response.data;
             $scope.friends = friends;
+        }, function (error) {
+            console.log(error.data);
+        });
+}
+
+function registerFriend(form, $http, $scope) {
+    var name = form.name;
+    var age = form.age;
+    var familly = form.familly;
+    var race = form.race;
+    var food = form.food;
+    var password = form.password;
+    var user = {
+        'name': name,
+        'age': age,
+        'familly': familly,
+        'race': race,
+        'food': food,
+        'password': password,
+    };
+    $http({
+        method: 'POST',
+        url: "/registerFriends",
+        data: JSON.stringify(user),
+        headers: {
+            'Content-Type': "application/json"
+        },
+    })
+        .then(function (response) {
+            addFriend(name, $http, $scope);
         }, function (error) {
             console.log(error.data);
         });

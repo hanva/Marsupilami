@@ -47,7 +47,6 @@ class MainController extends AbstractController
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $RAW_QUERY = 'SELECT * FROM user ';
-
         $statement = $em->getConnection()->prepare($RAW_QUERY);
         $statement->execute();
         $result = $statement->fetchAll();
@@ -68,20 +67,22 @@ class MainController extends AbstractController
         if (isset($request) && is_string($username)) {
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->findByName($username);
-            if (empty($friend))
-                return $this->redirectToRoute('friends');
-            else {
+            if (empty($friend)) {
+                $response = new Response(json_encode(404));
+                return $response;
+            } else {
                 $user->addFriend($friend[0]);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
             }
-            $friendManger = new FriendsManager();
-            $data = $friendManger->getFriends($user);
-            $response = new Response(json_encode($data));
-            return $response;
         }
+        $friendManger = new FriendsManager();
+        $data = $friendManger->getFriends($user);
+        $response = new Response(json_encode($data));
+        return $response;
     }
+
 
     /**
      * @Route("/removeFriends" ,methods={"POST"}))

@@ -57,7 +57,7 @@ class ProfileController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-        $response = new Response(json_encode($data));
+        $response = new Response(json_encode(["status" => "200"]));
         return $response;
     }
 }
