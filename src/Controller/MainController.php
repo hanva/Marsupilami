@@ -63,9 +63,8 @@ class MainController extends AbstractController
      */
     public function addFriends(Request $request)
     {
-        $postdata = file_get_contents("php://input");
-        $request = json_decode($postdata);
-        $username = $request->username;
+        $data = json_decode($request->getContent(), true);
+        $username = implode(",", $data);
         if (isset($request) && is_string($username)) {
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->findByName($username);
@@ -90,9 +89,8 @@ class MainController extends AbstractController
     public
     function removeFriends(Request $request)
     {
-        $postdata = file_get_contents("php://input");
-        $request = json_decode($postdata);
-        $username = $request->username;
+        $data = json_decode($request->getContent(), true);
+        $username = implode(",", $data);
         if (isset($request) && is_string($username)) {
             $user = $this->getUser();
             $friend = $this->getDoctrine()->getRepository(User::class)->findByName($username);

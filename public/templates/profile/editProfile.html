@@ -1,11 +1,11 @@
 <div ng-controller="profileController">
     <h1>Edit profile</h1><br>
-    <form ng-submit="editProfile()">
-        Name: <input value=" {{user.name}}"><br>
-        Age: <input value="{{user.age}}"</input><br>
-        Familly: <input value="{{user.familly}}"><br>
-        Race: <input value="{{user.race}}"><br>
-        Food:<input value="{{user.food}}"><br>
+    <form ng-submit="editProfile(this)">
+        Name: <input ng-model="user.name"><br>
+        Age: <input type="number" ng-model="user.age"><br>
+        Familly: <input ng-model="user.familly"><br>
+        Race: <input ng-model="user.race"><br>
+        Food:<input ng-model=" user.food"><br>
         <button>Modifier</button>
     </form>
 </div>
